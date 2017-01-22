@@ -12,7 +12,7 @@ pkgbase=kodi
 pkgname=('kodi' 'kodi-eventclients')
 pkgver=16.1
 _codename=Jarvis
-pkgrel=5
+pkgrel=6
 arch=('i686' 'x86_64')
 url="http://kodi.tv"
 license=('GPL2')
@@ -98,7 +98,6 @@ package_kodi() {
     'lirc: Remote controller support'
     'pulseaudio: PulseAudio support'
     'shairplay: AirPlay support'
-    'udisks: Automount external drives'
     'unrar: Archives support'
     'unzip: Archives support'
     'upower: Display battery level'
