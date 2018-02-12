@@ -33,7 +33,7 @@ makedepends=(
   'libvdpau' 'libxrandr' 'libxslt' 'lzo' 'mesa' 'nasm' 'nss-mdns'
   'python2-pillow' 'python2-pybluez' 'python2-simplejson' 'rtmpdump'
   'shairplay' 'smbclient' 'speex' 'swig' 'taglib' 'tinyxml' 'unzip' 'upower'
-  'yajl' 'zip' 'git'
+  'yajl' 'zip' 'git' 'giflib'
 )
 _libdvdcss_commit="2f12236bc1c92f73c21e973363f79eb300de603f"
 _libdvdnav_commit="981488f7f27554b103cca10c1fbeba027396c94a"
@@ -153,6 +153,7 @@ package_kodi() {
 package_kodi-eventclients() {
   pkgdesc="Kodi Event Clients"
   conflicts=('kodi-eventclients')
+  optdepends=('python2: most eventclients are implemented in python2')
 
   _components=(
     'kodi-eventclients-common'
