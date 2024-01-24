@@ -20,7 +20,7 @@
 pkgbase=kodi
 pkgname=('kodi' 'kodi-gles' 'kodi-eventclients' 'kodi-tools-texturepacker' 'kodi-dev')
 pkgver=20.3
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://kodi.tv"
 license=('GPL2')
@@ -64,6 +64,7 @@ source=(
   "$pkgbase-libudfread-$_libudfread_version.tar.gz::https://mirrors.kodi.tv/build-deps/sources/libudfread-$_libudfread_version.tar.gz"
   'https://github.com/xbmc/xbmc/commit/35be40daa39965a9ea5b3569eb7d515e6a14da5d.patch'  # flatbuffers 23.3.3
   '0001-ffmpeg-fix-build-with-binutils-update.patch'  # binutils >=2.41
+  'https://github.com/xbmc/xbmc/pull/23227.patch'  # thread priority crash
 )
 noextract=(
   "$pkgbase-libdvdcss-$_libdvdcss_version.tar.gz"
@@ -85,7 +86,8 @@ sha512sums=('cdec1383d33f421828f0249ac2929980c6eaa39e345a8a364d9f3479f873029a15f
             '4066c94f2473c7ea16917d29a613e16f840a329089c88e0bdbdb999aef3442ba00abfd2aa92266fa9c067e399dc88e6f0ccac40dc151378857e665638e78bbf0'
             '3069feb5db40288beb5b112b285186162a704f0fdd3cf67a17fd4eeea015f2cfcfbb455b7aa7c3d79d00fd095a3fd11cffc7b121dce94d99c3b06a509a8977d2'
             'c05888d1ad11f9a33a578ddd2fdb705ccd385178f93f68c6af66d9361a16664f2efec7e92c3bdc2c5c93a979e973e6448ffd2b26dab6d120e1ce8a5ceb2bd948'
-            '6de9e7673022e74428a55ca1e761bdb70e0b6432faa3dae7a2306c197bc52616bffdc138073496c51aebee537079cfd768845f233d688eeea5440dfb5ba163ec')
+            '6de9e7673022e74428a55ca1e761bdb70e0b6432faa3dae7a2306c197bc52616bffdc138073496c51aebee537079cfd768845f233d688eeea5440dfb5ba163ec'
+            '8c0eeb8dbc1e644b39bcdc98a47c6dfb78c206d19db7bc9597f4046eed000d515ac986a6c6806dd8f83f28fdf7ed84cfb295ee0652c769496d603b1f7529578d')
 
 prepare() {
   [[ -d "$srcdir/kodi-build" ]] && rm -rf "$srcdir/kodi-build"
@@ -101,6 +103,9 @@ prepare() {
   patch -p1 -i "$srcdir/35be40daa39965a9ea5b3569eb7d515e6a14da5d.patch"
   # fix build with binutils >=2.41
   patch -p1 -i "$srcdir/0001-ffmpeg-fix-build-with-binutils-update.patch"
+  # potential fix for thread priority crash
+  # https://gitlab.archlinux.org/archlinux/packaging/packages/kodi/-/issues/3
+  patch -p1 -i "$srcdir/23227.patch"
 }
 
 build() {
@@ -114,6 +119,9 @@ build() {
     -DENABLE_SSE3=ON
     -DENABLE_SSSE3=ON
     -DENABLE_SSE4_1=ON
+    -DENABLE_SSE4_2=ON
+    -DENABLE_AVX=ON
+    -DENABLE_AVX2=ON
     -DUSE_LTO=ON
     -DENABLE_LDGOLD=OFF
     -DENABLE_AIRTUNES=ON
