@@ -68,6 +68,8 @@ source=(
   'https://github.com/xbmc/xbmc/commit/d2022ce1.patch'
   'https://github.com/xbmc/xbmc/commit/6f5dff4b.patch'
   'https://patch-diff.githubusercontent.com/raw/xbmc/xbmc/pull/24577.patch'
+  '0002-CWinSystemGbm-add-colourspace-connector-property.patch'
+  '0003-video_clear.patch'
 )
 noextract=(
   "$pkgbase-libdvdcss-$_libdvdcss_version.tar.gz"
@@ -93,7 +95,9 @@ sha512sums=('cdec1383d33f421828f0249ac2929980c6eaa39e345a8a364d9f3479f873029a15f
             '8c0eeb8dbc1e644b39bcdc98a47c6dfb78c206d19db7bc9597f4046eed000d515ac986a6c6806dd8f83f28fdf7ed84cfb295ee0652c769496d603b1f7529578d'
             'f4401073756f20eacb7ee06f5d4a581d505cca3129f66e57fd6f05f135d3261b19503f86e9da303cfd12b12bec8a33896c3574b8813891ef2569a9bdb5397903'
             '4672c9f26f9934be7f3cf1bc3bb8f7fc5fb84cafde05541d2fc62df2355361da27cc0321905e183a90b7470d62c760dcd12d3668b99529afc185275a0c3df7f9'
-            '5dcaf77a76a738f39b23a681c4f80cb808e26aff0484b6b4d645e437c1d71ba9e7beedc80abb3e9e4785efb8e0b8b1097f3e399a110ef20fabd6348fc7a23e0b')
+            '5dcaf77a76a738f39b23a681c4f80cb808e26aff0484b6b4d645e437c1d71ba9e7beedc80abb3e9e4785efb8e0b8b1097f3e399a110ef20fabd6348fc7a23e0b'
+            'c413c32fdb6c6184a70a43ed573a1757747b92cc798089f7dcaef617014eb6e1db6f5f3ce4ad23fdc7480ccd78f35d9594e360762ad34c8fbf0c2ca074f15eb2'
+            'cdbf4d8f545623ed125b78b2e0074e1d42d5f6a58fe5f5ddfb6685ec7bbee336df021a62499c29caabab5e3ffc18d4829ec60d23f164fcca90c2bf6bed93ddf2')
 
 prepare() {
   [[ -d "$srcdir/kodi-build" ]] && rm -rf "$srcdir/kodi-build"
@@ -116,6 +120,9 @@ prepare() {
   patch -p1 -i ../d2022ce1.patch
   patch -p1 -i ../6f5dff4b.patch
   patch -p1 -i ../24577.patch
+
+  patch -p1 -i "$srcdir/0002-CWinSystemGbm-add-colourspace-connector-property.patch"
+  patch -p1 -i "$srcdir/0003-video_clear.patch"
 }
 
 build() {
