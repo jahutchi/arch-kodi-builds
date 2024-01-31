@@ -1,0 +1,42 @@
+diff --git a/xbmc/pvr/addons/PVRClientCapabilities.h b/xbmc/pvr/addons/PVRClientCapabilities.h
+index edf20900a0..2a5ea3bd9f 100644
+--- a/xbmc/pvr/addons/PVRClientCapabilities.h
++++ b/xbmc/pvr/addons/PVRClientCapabilities.h
+@@ -9,6 +9,7 @@
+ #pragma once
+ 
+ #include "addons/kodi-dev-kit/include/kodi/c-api/addon-instance/pvr.h"
++#include "utils/log.h"
+ 
+ #include <memory>
+ #include <string>
+@@ -163,8 +164,14 @@ public:
+    */
+   bool SupportsRecordingsPlayCount() const
+   {
++    /*
+     return m_addonCapabilities && m_addonCapabilities->bSupportsRecordings &&
+            m_addonCapabilities->bSupportsRecordingPlayCount;
++    */
++    if (!m_addonCapabilities->bSupportsRecordingPlayCount)
++      CLog::Log(LOGWARNING, "PVRClientCapabilities.h: m_addonCapabilities->bSupportsRecordingPlayCount returned false");
++
++    return true;
+   }
+ 
+   /*!
+@@ -173,8 +180,14 @@ public:
+    */
+   bool SupportsRecordingsLastPlayedPosition() const
+   {
++    /*
+     return m_addonCapabilities && m_addonCapabilities->bSupportsRecordings &&
+            m_addonCapabilities->bSupportsLastPlayedPosition;
++    */
++    if (!m_addonCapabilities->bSupportsLastPlayedPosition)
++      CLog::Log(LOGWARNING, "PVRClientCapabilities.h: m_addonCapabilities->bSupportsLastPlayedPosition returned false");
++
++    return true;
+   }
+ 
+   /*!
